@@ -14,7 +14,7 @@ public class Monumento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-   private int id;
+   private long monumentoIds;
 
     @Column(nullable = false, length = 2) //Restricciones para el código del país.
    private String cod_pais;

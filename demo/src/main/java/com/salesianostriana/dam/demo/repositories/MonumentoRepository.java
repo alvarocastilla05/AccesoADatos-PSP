@@ -1,4 +1,7 @@
 package com.salesianostriana.dam.demo.repositories;
 
-public class MonumentoRepository {
+import com.salesianostriana.dam.demo.models.Monumento;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MonumentoRepository extends JpaRepository<Monumento, Long> {
 }
