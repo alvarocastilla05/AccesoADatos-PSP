@@ -15,10 +15,11 @@ public class MonumentoController {
     private MonumentoServicio servicio;
 
     @GetMapping("/nuevo")
-    public String aniadirMonumento(Model model){
+    public Monumento aniadirMonumento(Model model){
         Monumento monumento = new Monumento();
         model.addAttribute("monumento", monumento);
 
-        return "redirect:/nuevo";
+        return monumento;
+
     }
 }
