@@ -15,18 +15,30 @@ public class MonumentoServicio {
 
 
     public List<Monumento> findAll() {
+
         return monumentoRepository.findAll();
     }
 
     public Optional<Monumento> findById(Long id) {
+
         return monumentoRepository.findById(id);
     }
 
+    public void modificar(Long id, Monumento monumento) {
+        Optional<Monumento> monumentoEncontrado = monumentoRepository.findById(id);
+
+        if (monumentoEncontrado.isPresent()) {
+            monumentoRepository.save(monumento);
+        }
+    }
+
     public void saveOrUpdate(Monumento monumento) {
+
         monumentoRepository.save(monumento);
     }
 
     public void delete(Long id){
+
         monumentoRepository.deleteById(id);
     }
 }

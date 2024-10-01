@@ -13,19 +13,33 @@ import lombok.NoArgsConstructor;
 public class Monumento {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-   private long monumentoIds;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long monumentoId;
 
     @Column(nullable = false, length = 2) //Restricciones para el código del país.
-   private String cod_pais;
+    private String cod_pais;
 
-   private String nombre_pais;
-   private String nombre_ciudad;
-   private double latitud;
-   private double longitud;
-   private String nombre_monumento;
-   private String descripcion;
-   private String url_foto;
+    @Column(nullable = false)
+    private String nombre_pais;
+
+    @Column(nullable = false)
+
+    private String nombre_ciudad;
+
+    @Column(nullable = false)
+    private double latitud;
+
+    @Column(nullable = false)
+    private double longitud;
+
+    @Column(nullable = false)
+    private String nombre_monumento;
+
+    @Column(nullable = false)
+    private String descripcion;
+
+    @Column(nullable = false)
+    private String url_foto;
 
 
 
