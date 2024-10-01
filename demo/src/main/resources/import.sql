@@ -1,0 +1,1 @@
+insert into monumento (monumento_id, cod_pais, nombre_pais, nombre_ciudad, latitud, longitud, nombre_monumento, descripcion, url_foto) values (1, 'ES', 'España', 'Sevilla', 10, 10, 'Giralda', 'Muy Bonita', 'giralda.jpg')

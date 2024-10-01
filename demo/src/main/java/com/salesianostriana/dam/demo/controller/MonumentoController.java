@@ -22,7 +22,8 @@ public class MonumentoController {
 
     }
 
-    /*@PostMapping
+    /*
+    @PostMapping
     public void saveUpdate(@RequestBody Monumento monumento ) {
 
         monumentoServicio.saveOrUpdate(monumento);
@@ -33,10 +34,18 @@ public class MonumentoController {
         Monumento monumentoNuevo = monumentoServicio.saveOrUpdate(monumento);
     }*/
 
-    /*@PutMapping("{monumentoId}")
+    @PutMapping("{monumentoId}")
     public ResponseEntity<Monumento> editarMonumento(@PathVariable Long monumentoId, @RequestBody Monumento monumento) {
+        Optional<Monumento> monumentoEditar = monumentoServicio.findById(monumentoId);
 
-    }*/
+        if (monumentoEditar.isPresent()) {
+
+            monumentoServicio.modificar(monumentoId, monumento);
+
+
+        }
+        return ResponseEntity.ok(monumentoEditar.get());
+    }
 
 
 
