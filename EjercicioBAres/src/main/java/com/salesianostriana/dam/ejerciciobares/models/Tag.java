@@ -16,13 +16,13 @@ import java.util.List;
 public class Tag {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long tagId;
 
     @Column(nullable = false)
-    private String name;
+    private String nombre;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "tags")
     @JsonIgnoreProperties("tags")
     private List<Bar> bares = new ArrayList<>();
 
