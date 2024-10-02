@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.ejerciciobares.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +33,12 @@ public class Bar {
     @Column(nullable = false)
     private String descripcion;
 
-    /*
     @Column(nullable = false)
-    private List<String> tags = new ArrayList<>();
-    */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "bar_tag", joinColumns = @JoinColumn(name = "barId"), inverseJoinColumns = @JoinColumn(name = "tagId"))
+    @JsonIgnoreProperties("bares")
+    private List<Tag> tags = new ArrayList<>();
+
+    @Column(nullable = false)
+    private String urlImagen;
 }
