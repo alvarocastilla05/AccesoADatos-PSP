@@ -3,6 +3,7 @@ package com.salesianostriana.dam.demo.controller;
 import com.salesianostriana.dam.demo.models.Monumento;
 import com.salesianostriana.dam.demo.services.MonumentoServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,45 +18,35 @@ public class MonumentoController {
     private MonumentoServicio monumentoServicio;
 
     @GetMapping
-    public List<Monumento> getMonumentos() {
-        return monumentoServicio.findAll();
+    public ResponseEntity<List<Monumento>> getMonumentos() {
+        return new ResponseEntity<>(monumentoServicio.findAll(), HttpStatus.OK);
 
     }
 
-    /*
-    @PostMapping
-    public void saveUpdate(@RequestBody Monumento monumento ) {
-
-        monumentoServicio.saveOrUpdate(monumento);
-    }*/
-
-    /*@PostMapping
+    @PostMapping("/add")
     public ResponseEntity<Monumento> addMonumento(@RequestBody Monumento monumento) {
-        Monumento monumentoNuevo = monumentoServicio.saveOrUpdate(monumento);
-    }*/
+        return new ResponseEntity<Monumento>(monumentoServicio.guardarMonumento(monumento), HttpStatus.CREATED);
+    }
 
-    @PutMapping("{monumentoId}")
-    public ResponseEntity<Monumento> editarMonumento(@PathVariable Long monumentoId, @RequestBody Monumento monumento) {
-        Optional<Monumento> monumentoEditar = monumentoServicio.findById(monumentoId);
-
-        if (monumentoEditar.isPresent()) {
-
-            monumentoServicio.modificar(monumentoId, monumento);
-
-
-        }
-        return ResponseEntity.ok(monumentoEditar.get());
+    @PutMapping("/edit/{monumentoId}")
+    public ResponseEntity<Monumento> modificarMonumento(@RequestBody Monumento monumento, @PathVariable Long monumentoId) {
+        return new ResponseEntity<Monumento>(monumentoServicio.modificar(monumentoId, monumento), HttpStatus.OK);
     }
 
 
 
-    @DeleteMapping("{monumentoId}")
-    public void deleteMonumento(@PathVariable("monumentoId") Long monumentoId) {
+    @DeleteMapping("/{monumentoId}")
+    public ResponseEntity<?> deleteMonumento(@PathVariable("monumentoId") Long monumentoId) {
         monumentoServicio.delete(monumentoId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{monumentoId}")
-    public Optional<Monumento> getById(@PathVariable("monumentoId") Long monumentoId) {
-        return monumentoServicio.findById(monumentoId);
+    public ResponseEntity<Monumento> getById(@PathVariable("monumentoId") Long monumentoId) {
+
+        if(monumentoServicio.findById(monumentoId).isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Monumento>(monumentoServicio.findById(monumentoId).get(), HttpStatus.OK);
     }
 }

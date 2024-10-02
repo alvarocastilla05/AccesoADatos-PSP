@@ -17,14 +17,14 @@ public class Monumento {
     private long monumentoId;
 
     @Column(nullable = false, length = 2) //Restricciones para el código del país.
-    private String cod_pais;
+    private String codPais;
 
     @Column(nullable = false)
-    private String nombre_pais;
+    private String nombrePais;
 
     @Column(nullable = false)
 
-    private String nombre_ciudad;
+    private String nombreCiudad;
 
     @Column(nullable = false)
     private double latitud;
@@ -33,13 +33,13 @@ public class Monumento {
     private double longitud;
 
     @Column(nullable = false)
-    private String nombre_monumento;
+    private String nombreMonumento;
 
     @Column(nullable = false)
     private String descripcion;
 
     @Column(nullable = false)
-    private String url_foto;
+    private String urlFoto;
 
 
 

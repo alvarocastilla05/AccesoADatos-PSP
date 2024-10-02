@@ -24,19 +24,17 @@ public class MonumentoServicio {
         return monumentoRepository.findById(id);
     }
 
-    public void modificar(Long id, Monumento monumento) {
-        Optional<Monumento> monumentoEncontrado = monumentoRepository.findById(id);
+    public Monumento modificar(Long id, Monumento monumento) {
 
-        if (monumentoEncontrado.isPresent()) {
-            monumentoRepository.save(monumento);
+        Monumento monumentoEncontrado = monumentoRepository.findById(id).orElse(null);
+        if (monumentoEncontrado != null) {
+            return monumentoRepository.save(monumento);
         }
+        return monumento;
     }
-
-    /*
-    public void saveOrUpdate(Monumento monumento) {
-
-        monumentoRepository.save(monumento);
-    }*/
+    public Monumento guardarMonumento(Monumento monumento) {
+        return monumentoRepository.save(monumento);
+    }
 
     public void delete(Long id){
 
