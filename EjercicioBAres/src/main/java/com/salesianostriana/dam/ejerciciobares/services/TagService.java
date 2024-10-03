@@ -14,6 +14,7 @@ public class TagService {
     @Autowired
     private TagRepository tagRepository;
 
+
     public List<Tag> findAll() {
         return tagRepository.findAll();
     }
@@ -38,4 +39,6 @@ public class TagService {
     public void eliminarTag (Long id) {
         tagRepository.deleteById(id);
     }
+
+
 }

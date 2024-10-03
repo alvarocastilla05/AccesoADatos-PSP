@@ -3,6 +3,7 @@ package com.salesianostriana.dam.ejerciciobares.services;
 import com.salesianostriana.dam.ejerciciobares.models.Bar;
 import com.salesianostriana.dam.ejerciciobares.models.Tag;
 import com.salesianostriana.dam.ejerciciobares.repositories.BarRepository;
+import com.salesianostriana.dam.ejerciciobares.repositories.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class BarService {
 
     @Autowired
     private BarRepository barRepository;
+
+    @Autowired
+    private TagRepository tagRepository;
 
     public List<Bar> findAll() {
         return barRepository.findAll();
@@ -27,9 +31,14 @@ public class BarService {
     public Bar modificar (Long id, Bar bar) {
         Bar barEncontrado = barRepository.findById(id).orElse(null);
         if(barEncontrado != null) {
-            return barRepository.save(barEncontrado);
+            barEncontrado.setDescripcion(bar.getDescripcion());
+            barEncontrado.setNombre(bar.getNombre());
+            barEncontrado.setLatitud(bar.getLatitud());
+            barEncontrado.setLongitud(bar.getLongitud());
+            barEncontrado.setUrlImagen(bar.getUrlImagen());
+            barEncontrado.setDireccion(bar.getDireccion());
         }
-        return barEncontrado;
+        return barRepository.save(barEncontrado);
     }
 
     public Bar guardarBar (Bar bar) {
@@ -37,6 +46,30 @@ public class BarService {
     }
 
     public void eliminarBar (Long id) {
+
         barRepository.deleteById(id);
+    }
+
+    public Bar aniadirTag (Long id, Tag tag) {
+        Bar bar = barRepository.findById(id).orElse(null);
+        if(bar != null) {
+            bar.getTags().add(tag);
+            tag.getBares().add(bar);
+
+            tagRepository.save(tag);
+        }
+        return barRepository.save(bar);
+    }
+
+    public Bar borrarTagDeBar (Long id, Tag tag) {
+        Bar bar = barRepository.findById(id).orElse(null);
+        if (bar != null) {
+            bar.getTags().remove(tag);
+            tag.getBares().remove(bar);
+            tagRepository.save(tag);
+
+        }
+        return barRepository.save(bar);
+
     }
 }
