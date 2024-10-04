@@ -1,0 +1,181 @@
+{
+	"info": {
+		"_postman_id": "b6ef0a18-684f-4e97-af6d-61dd16097d70",
+		"name": "Bar y Tags",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38617651"
+	},
+	"item": [
+		{
+			"name": "Bar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/place",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Buscar Bar ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/place/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AñadirBar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\" : \"Bar Casa Manolo2\",\r\n    \"direccion\" : \"Plaza Salvador\",\r\n    \"latitud\" : 10.0,\r\n    \"longitud\": 10.0,\r\n    \"descripcion\": \"Mu rico\",\r\n    \"tags\": [],\r\n    \"urlImagen\": \"casaManolo.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/place",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditarBar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\" : \"1\",\r\n    \"nombre\" : \"Cerveceria Urbion\",\r\n    \"direccion\" : \"Plaza Salvador\",\r\n    \"latitud\" : 10.0,\r\n    \"longitud\": 10.0,\r\n    \"descripcion\": \"Mu rico\",\r\n    \"urlImagen\": \"casaManolo.png\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/place/edit/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place",
+						"edit",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar Bar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/place/delete/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place",
+						"delete",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AñadirTagBar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/place/2/tag/add/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place",
+						"2",
+						"tag",
+						"add",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EliminarTagBar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/place/2/tag/del/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"place",
+						"2",
+						"tag",
+						"del",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
