@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/place")
@@ -22,6 +23,12 @@ public class BarController {
 
     @GetMapping
     public ResponseEntity<List<Bar>> getAllBars() {
+        List<Bar> bares = barService.findAll();
+
+        if(bares.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(barService.findAll(), HttpStatus.OK);
     }
 
@@ -32,6 +39,11 @@ public class BarController {
 
     @PutMapping("/edit/{id}")
     public ResponseEntity<Bar> modificarBar(@RequestBody Bar bar, @PathVariable Long id){
+
+        Optional<Bar> bares = barService.findById(id);
+        if(bares.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return new ResponseEntity<Bar>(barService.modificar(id, bar), HttpStatus.OK);
     }
 
@@ -53,12 +65,14 @@ public class BarController {
     @PutMapping("/{id}/tag/add/{idNuevoTag}")
     public ResponseEntity<Bar> addTag(@PathVariable("id") Long id, @PathVariable("idNuevoTag") Long idNuevoTag) {
         Tag tagNuevo = tagService.findById(idNuevoTag).get();
+
         return new ResponseEntity<Bar>(barService.aniadirTag(id, tagNuevo), HttpStatus.OK);
     }
 
     @PutMapping("/{id}/tag/del/{idTag}")
     public ResponseEntity<Bar> delTag(@PathVariable("id") Long id, @PathVariable("idTag") Long idTag) {
         Tag tag = tagService.findById(idTag).get();
+
         return new ResponseEntity<Bar>(barService.borrarTagDeBar(id, tag), HttpStatus.OK);
     }
 }
