@@ -28,8 +28,7 @@ public class ProductoController {
 	 */
 	@GetMapping("/producto")
 	public List<Producto> obtenerTodos() {
-		// Vamos a modificar este código
-		return null;
+		return productoRepositorio.findAll();
 	}
 
 	/**
@@ -40,8 +39,7 @@ public class ProductoController {
 	 */
 	@GetMapping("/producto/{id}")
 	public Producto obtenerUno(@PathVariable Long id) {
-		// Vamos a modificar este código
-		return null;
+		return productoRepositorio.findById(id).orElse(null);
 	}
 
 	/**
@@ -52,8 +50,7 @@ public class ProductoController {
 	 */
 	@PostMapping("/producto")
 	public Producto nuevoProducto(@RequestBody Producto nuevo) {
-		// Vamos a modificar este código
-		return null;
+		return productoRepositorio.save(nuevo);
 	}
 
 	/**
@@ -64,8 +61,12 @@ public class ProductoController {
 	 */
 	@PutMapping("/producto/{id}")
 	public Producto editarProducto(@RequestBody Producto editar, @PathVariable Long id) {
-		// Vamos a modificar este código
-		return null;
+		if (productoRepositorio.existsById(id)) {
+			editar.setId(id);
+			return productoRepositorio.save(editar);
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -75,8 +76,12 @@ public class ProductoController {
 	 */
 	@DeleteMapping("/producto/{id}")
 	public Producto borrarProducto(@PathVariable Long id) {
-		// Vamos a modificar este código
-		return null;
+		if (productoRepositorio.existsById(id)) {
+			Producto result = productoRepositorio.findById(id).get();
+			productoRepositorio.deleteById(id);
+			return result;
+		} else
+			return null;
 	}
 
 }
