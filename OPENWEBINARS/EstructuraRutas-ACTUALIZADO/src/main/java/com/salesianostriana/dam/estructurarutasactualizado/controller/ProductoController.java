@@ -75,14 +75,19 @@ public class ProductoController {
      * @return
      */
     @PutMapping("/producto/{id}")
-    public Producto editarProducto(@RequestBody Producto editar, @PathVariable Long id) {
-        if (productoRepositorio.existsById(id)) {
-            editar.setId(id);
-            return productoRepositorio.save(editar);
-        } else {
-            return null;
-        }
+    public ResponseEntity<?> editarProducto(@RequestBody Producto editar, @PathVariable Long id) {
+
+        return productoRepositorio.findById(id).map(p -> {
+            p.setNombre(editar.getNombre());
+            p.setPrecio(editar.getPrecio());
+            return ResponseEntity.ok(productoRepositorio.save(p));
+        }).orElseGet(() -> {
+            return ResponseEntity.notFound().build();
+        });
     }
+
+
+
 
     /**
      * Borra un producto del catálogo en base a su id
@@ -90,13 +95,10 @@ public class ProductoController {
      * @return
      */
     @DeleteMapping("/producto/{id}")
-    public Producto borrarProducto(@PathVariable Long id) {
-        if (productoRepositorio.existsById(id)) {
-            Producto result = productoRepositorio.findById(id).get();
-            productoRepositorio.deleteById(id);
-            return result;
-        } else
-            return null;
+    public ResponseEntity<?> borrarProducto(@PathVariable Long id) {
+        productoRepositorio.deleteById(id);
+        return ResponseEntity.noContent().build();
+
     }
 
 }
