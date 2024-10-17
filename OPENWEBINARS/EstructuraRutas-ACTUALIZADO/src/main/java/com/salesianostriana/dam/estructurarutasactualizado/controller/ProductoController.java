@@ -1,7 +1,13 @@
 package com.salesianostriana.dam.estructurarutasactualizado.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.salesianostriana.dam.estructurarutasactualizado.dto.CreateProductoDTO;
+import com.salesianostriana.dam.estructurarutasactualizado.dto.ProductoDTO;
+import com.salesianostriana.dam.estructurarutasactualizado.dto.converter.ProductoDTOConverter;
+import com.salesianostriana.dam.estructurarutasactualizado.modelo.Categoria;
+import com.salesianostriana.dam.estructurarutasactualizado.modelo.CategoriaRepositorio;
 import com.salesianostriana.dam.estructurarutasactualizado.modelo.Producto;
 import com.salesianostriana.dam.estructurarutasactualizado.modelo.ProductoRepositorio;
 import org.springframework.http.HttpStatus;
@@ -23,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class ProductoController {
 
     private final ProductoRepositorio productoRepositorio;
+    private final ProductoDTOConverter productoDTOConverter;
+    private final CategoriaRepositorio categoriaRepositorio;
 
     /**
      * Obtenemos todos los productos
@@ -36,7 +44,12 @@ public class ProductoController {
         if(result.isEmpty()) {
             return ResponseEntity.notFound().build();
         }else {
-            return ResponseEntity.ok(result);
+            //return ResponseEntity.ok(result);
+            List<ProductoDTO> dtoList =
+                    result.stream()
+                            .map(productoDTOConverter::convertToDTO)
+                            .collect(Collectors.toList());
+            return ResponseEntity.ok(dtoList);
         }
     }
 
@@ -63,9 +76,19 @@ public class ProductoController {
      * @return producto insertado
      */
     @PostMapping("/producto")
-    public ResponseEntity<Producto> nuevoProducto(@RequestBody Producto nuevo) {
-        Producto saved = productoRepositorio.save(nuevo);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    public ResponseEntity<Producto> nuevoProducto(@RequestBody CreateProductoDTO nuevo) {
+        //Producto saved = productoRepositorio.save(nuevo);
+        //return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+
+        Producto nuevoProducto = new Producto();
+        nuevoProducto.setNombre(nuevo.getNombre());
+        nuevoProducto.setPrecio(nuevo.getPrecio());
+        Categoria categoria = categoriaRepositorio.findById(nuevo.getCategoriaId()).orElse(null);
+        nuevoProducto.setCategoria(categoria);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoRepositorio.save(nuevoProducto));
+
+
     }
 
     /**
