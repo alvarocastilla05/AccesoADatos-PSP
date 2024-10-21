@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import com.salesianostriana.dam.estructurarutasactualizado.dto.CreateProductoDTO;
 import com.salesianostriana.dam.estructurarutasactualizado.dto.ProductoDTO;
 import com.salesianostriana.dam.estructurarutasactualizado.dto.converter.ProductoDTOConverter;
+import com.salesianostriana.dam.estructurarutasactualizado.error.ProductoNotFoundException;
 import com.salesianostriana.dam.estructurarutasactualizado.modelo.Categoria;
 import com.salesianostriana.dam.estructurarutasactualizado.modelo.CategoriaRepositorio;
 import com.salesianostriana.dam.estructurarutasactualizado.modelo.Producto;
@@ -60,13 +61,16 @@ public class ProductoController {
      * @return Null si no encuentra el producto
      */
     @GetMapping("/producto/{id}")
-    public ResponseEntity<Producto> obtenerUno(@PathVariable Long id) {
-        Producto result = productoRepositorio.findById(id).orElse(null);
+    public Producto obtenerUno(@PathVariable Long id) {
+        /*Producto result = productoRepositorio.findById(id).orElse(null);
         if(result == null){
             return ResponseEntity.notFound().build();
         }else{
             return ResponseEntity.ok(result);
-        }
+        }*/
+        return productoRepositorio.findById(id)
+                .orElseThrow(() -> new ProductoNotFoundException(id));
+
     }
 
     /**
@@ -98,15 +102,16 @@ public class ProductoController {
      * @return
      */
     @PutMapping("/producto/{id}")
-    public ResponseEntity<?> editarProducto(@RequestBody Producto editar, @PathVariable Long id) {
+    public Producto editarProducto(@RequestBody Producto editar, @PathVariable Long id) {
 
         return productoRepositorio.findById(id).map(p -> {
-            p.setNombre(editar.getNombre());
-            p.setPrecio(editar.getPrecio());
-            return ResponseEntity.ok(productoRepositorio.save(p));
-        }).orElseGet(() -> {
+                    p.setNombre(editar.getNombre());
+                    p.setPrecio(editar.getPrecio());
+                    return productoRepositorio.save(p);
+                }).orElseThrow(() -> new ProductoNotFoundException(id));
+        /*}).orElseGet(() -> {
             return ResponseEntity.notFound().build();
-        });
+        });*/
     }
 
 
@@ -119,7 +124,10 @@ public class ProductoController {
      */
     @DeleteMapping("/producto/{id}")
     public ResponseEntity<?> borrarProducto(@PathVariable Long id) {
-        productoRepositorio.deleteById(id);
+        //productoRepositorio.deleteById(id);
+
+        Producto producto = productoRepositorio.findById(id).orElseThrow(() -> new ProductoNotFoundException(id));
+        productoRepositorio.delete(producto);
         return ResponseEntity.noContent().build();
 
     }
