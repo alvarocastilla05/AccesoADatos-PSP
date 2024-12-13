@@ -1,0 +1,27 @@
+package com.example.apartado2;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Product {
+
+    private Long id;
+
+    private String nombre;
+
+    private String descripcion;
+
+    private double pvp;
+
+    private List<String> imagenes;
+
+    private Category categoria;
+}
