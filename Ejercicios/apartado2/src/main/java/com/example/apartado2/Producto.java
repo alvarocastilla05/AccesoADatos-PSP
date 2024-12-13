@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Product {
+public class Producto {
 
     private Long id;
 
@@ -23,5 +23,5 @@ public class Product {
 
     private List<String> imagenes;
 
-    private Category categoria;
+    private Categoria categoria;
 }
