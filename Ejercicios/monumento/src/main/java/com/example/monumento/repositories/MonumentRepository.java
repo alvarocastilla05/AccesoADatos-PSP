@@ -4,9 +4,8 @@ import com.example.monumento.models.Monument;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 public class MonumentRepository {
@@ -65,6 +64,29 @@ public class MonumentRepository {
 
     public void delete(Long id) {
         monuments.remove(id);
+    }
+
+    public List<Monument> query(String nombre, String nombreCiudad) {
+        List<Monument> data = new ArrayList<>(monuments.values());
+        List<Monument> result = new ArrayList<>();
+
+        if (nombre.equalsIgnoreCase("all")) {
+            result = data;
+        } else {
+            result = data.stream().filter(m -> m.getNombre()
+                    .equalsIgnoreCase(nombre)).collect(Collectors.toCollection(ArrayList::new));
+        }
+
+        if (nombreCiudad.equalsIgnoreCase("asc")) {
+            result.sort(Comparator.comparing(Monument::getNombre_monumento));
+        } else if (nombreCiudad.equalsIgnoreCase("desc")) {
+            result.sort(Comparator.comparing(Monument::getNombre_monumento).reversed());
+
+        }
+
+        return Collections.unmodifiableList(result);
+
+
     }
 
 

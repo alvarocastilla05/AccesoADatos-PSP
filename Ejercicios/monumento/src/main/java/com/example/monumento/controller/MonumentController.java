@@ -17,12 +17,15 @@ public class MonumentController {
     private final MonumentRepository monumentRepository;
 
     @GetMapping
-    public ResponseEntity<List<Monument>> getAllMonuments() {
-        List<Monument> result = monumentRepository.getAll();
+    public ResponseEntity<List<Monument>> getAllMonuments(
+            @RequestParam(required = false, value = "countryName", defaultValue = "all") String monumentName,
+            @RequestParam(required = false, value = "sort", defaultValue = "desc") String sortDirection) {
+        List<Monument> result = monumentRepository.query(monumentName, sortDirection);
 
-        if(result.isEmpty()){
+        if (result.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(result);
     }
 
