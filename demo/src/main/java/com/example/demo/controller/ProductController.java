@@ -1,15 +1,13 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.model.Product;
+import com.example.demo.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/product/")
@@ -43,7 +41,8 @@ public class ProductController {
         List<Product> result = productRepository.query(max, sortDirection);
 
         if (result.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            //return ResponseEntity.notFound().build();
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontró ningún producto");
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
