@@ -16,6 +16,6 @@ public class Direccion {
     private String linea1;
     private String linea2;
     private String cp;
-    private int poblacion;
+    private String poblacion;
     private String provincia;
 }

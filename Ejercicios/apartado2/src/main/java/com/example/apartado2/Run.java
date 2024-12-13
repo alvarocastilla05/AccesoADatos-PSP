@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicLong;
 
-@SpringBootApplication
+@Component
 public class Run {
     @PostConstruct
     public void init(){
