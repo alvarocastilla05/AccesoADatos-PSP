@@ -1,6 +1,5 @@
-package com.example.demo;
+package com.example.demo.model;
 
-import com.example.demo.model.Product;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Repository;
 
