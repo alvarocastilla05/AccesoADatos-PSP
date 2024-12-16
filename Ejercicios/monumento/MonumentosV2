@@ -1,0 +1,126 @@
+{
+	"info": {
+		"_postman_id": "94ba1262-8398-445b-ac4f-718806d56cec",
+		"name": "AD - PSP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38617651"
+	},
+	"item": [
+		{
+			"name": "Monumentos",
+			"item": [
+				{
+					"name": "Lista Monumentos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/monument",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monument"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MonumentoId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/monument/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monument",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir Monumento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 3,\r\n        \"cod_pais\": \"ES\",\r\n        \"nombre\": \"MI Casa\",\r\n        \"nombre_ciudad\": \"Úbeda\",\r\n        \"latitud\": 12.0,\r\n        \"longitud\": 15.0,\r\n        \"nombre_monumento\": \"Museo de Alfarería Paco Tito\",\r\n        \"descripcion\": \"Sitio chulo chulo\",\r\n        \"url_foto\": \"https://multimedia.andalucia.org/fotos/image_290557.jpeg\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/monument",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monument"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar Monumento",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 1,\r\n        \"cod_pais\": \"ES\",\r\n        \"nombre\": \"España\",\r\n        \"nombre_ciudad\": \"Úbeda\",\r\n        \"latitud\": 12.0,\r\n        \"longitud\": 15.0,\r\n        \"nombre_monumento\": \"Museo de Alfarería Paco Tito\",\r\n        \"descripcion\": \"Sitio mas chulo chulo aun\",\r\n        \"url_foto\": \"https://multimedia.andalucia.org/fotos/image_290557.jpeg\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/monument/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monument",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Monumento",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/monument/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"monument",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
