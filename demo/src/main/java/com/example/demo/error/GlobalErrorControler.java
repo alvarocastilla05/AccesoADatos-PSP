@@ -16,6 +16,7 @@ public class GlobalErrorControler extends ResponseEntityExceptionHandler {
         ProblemDetail result = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
         result.setTitle("Producto No Encontrado");
         result.setType(URI.create("https://www.salesianos-triana.edu/error/product-not-found"));
+        result.setProperty("author", "Álvaro");
 
         return result;
     }
