@@ -5,7 +5,10 @@ import com.example.demo.dto.GetProductListDto;
 import com.example.demo.model.Product;
 import com.example.demo.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,14 +24,29 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Producto", description = "El controlador del producto")
 public class ProductController {
 
+    private final ProductService productService;
+
     @Operation(summary = "Obtiene todos los productos")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-            description = "Se han encontrado productos",
-            content = {@Content()})
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Se han encontrado productos",
+                    content = { @Content(mediaType = "application/json",
+                            array = @ArraySchema(schema = @Schema(implementation = GetProductListDto.class)),
+                            examples = {@ExampleObject(
+                                    value = """
+                                [
+                                    {"id": 1, "name: "Laptop", "price": 1234.56},
+                                    {"id": 2, "name: "Smartphone", "price": 999.99}
+                                ]
+                                """
+                            )}
+                    )}),
+            @ApiResponse(responseCode = "404",
+                    description = "No se ha encontrado ningún producto",
+                    content = @Content),
     })
 
-    private final ProductService productService;
 
     @GetMapping
     //public List<Product> getAll(

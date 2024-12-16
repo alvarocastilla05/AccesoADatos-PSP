@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/monument")
 @RequiredArgsConstructor
+
 public class MonumentController {
 
     private final MonumentRepository monumentRepository;
