@@ -22,9 +22,9 @@ public class MonumentService {
         return result;
     }
 
-    public List<Monument> query(String nombre, String nombre_ciudad){
-        List<Monument> result = monumentRepository.query(nombre, nombre_ciudad);
-        if(result.isEmpty())
+    public List<Monument> query(double maxLatitude, String sortDirection) {
+        List<Monument> result = monumentRepository.query(maxLatitude, sortDirection);
+        if (result.isEmpty())
             throw new MonumentNotFoundException();
         return result;
     }
@@ -38,7 +38,7 @@ public class MonumentService {
         return monumentRepository.add(monument);
     }
 
-    public Monument update(Long id, Monument monument){
+    public Monument edit(Long id, Monument monument){
         return monumentRepository.edit(id, monument)
                 .orElseThrow(() -> new MonumentNotFoundException(id));
     }
