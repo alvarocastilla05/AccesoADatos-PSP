@@ -16,21 +16,24 @@ import java.util.Objects;
 @Table(name = "productos")
 public class Producto {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @Column(length = 512)
     private String nombre;
 
-    //@Column(length = 4000)
-    @Column(columnDefinition = "text")  //Esta propiedad cambia el tipo del atributo
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
 
+    @Column(name = "precio")
     private double precio;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id",
             foreignKey = @ForeignKey(name = "fk_producto_categoria"))
     private Categoria categoria;
+
 
     @Override
     public final boolean equals(Object o) {

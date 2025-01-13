@@ -14,7 +14,7 @@ public record GetProductoDto(
                 p.getId(),
                 p.getNombre(),
                 p.getPrecio(),
-                p.getCategoria()
-        )
+                GetCategoriaDto.of(p.getCategoria())
+        );
     }
 }

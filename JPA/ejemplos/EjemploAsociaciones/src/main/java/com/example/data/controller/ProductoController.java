@@ -1,6 +1,7 @@
 package com.example.data.controller;
 
 import com.example.data.dto.EditProductoCmd;
+import com.example.data.dto.GetProductoDto;
 import com.example.data.service.ProductoService;
 import com.example.data.model.Producto;
 import lombok.AllArgsConstructor;
@@ -18,8 +19,11 @@ public class ProductoController {
     private final ProductoService productoService;
 
     @GetMapping
-    public List<Producto> getAll() {
-        return productoService.findAll();
+    public List<GetProductoDto> getAll() {
+        return productoService.findAll()
+                .stream()
+                .map(GetProductoDto::of)
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -28,13 +32,16 @@ public class ProductoController {
     }
 
     @PostMapping
-    public ResponseEntity<Producto> create(@RequestBody EditProductoCmd editProductoCmd) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(productoService.save(editProductoCmd));
+    public ResponseEntity<Producto> create(@RequestBody EditProductoCmd nuevo) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(
+                        productoService.save(nuevo));
     }
 
     @PutMapping("/{id}")
-    public Producto update(@PathVariable Long id, @RequestBody EditProductoCmd editProductoCmd) {
-        return productoService.edit(editProductoCmd, id);
+    public Producto edit(@RequestBody EditProductoCmd aEditar,
+                         @PathVariable Long id) {
+        return productoService.edit(aEditar, id);
     }
 
     @DeleteMapping("/{id}")
