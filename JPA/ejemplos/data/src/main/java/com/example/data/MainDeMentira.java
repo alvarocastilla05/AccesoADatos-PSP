@@ -1,5 +1,7 @@
 package com.example.data;
 
+import com.example.data.model.Producto;
+import com.example.data.repos.ProductoRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

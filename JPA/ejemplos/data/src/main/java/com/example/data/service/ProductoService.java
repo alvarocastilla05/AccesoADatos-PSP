@@ -1,5 +1,7 @@
-package com.example.data;
+package com.example.data.service;
 
+import com.example.data.model.Producto;
+import com.example.data.repos.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,5 +44,9 @@ public class ProductoService {
                 })
                 .orElseThrow(() -> new EntityNotFoundException("No hay productos con id: "+ id));
 
+    }
+
+    public void delete(Long id) {
+        productoRepository.deleteById(id);
     }
 }
