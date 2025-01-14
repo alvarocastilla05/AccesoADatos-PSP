@@ -42,7 +42,6 @@ public class MainDeMentira {
 
         productoRepository.saveAll(List.of(p, p2));
 
-
     }
 
 }
