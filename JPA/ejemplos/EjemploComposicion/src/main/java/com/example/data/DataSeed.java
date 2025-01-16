@@ -1,24 +1,22 @@
 package com.example.data;
 
-import com.example.data.model.Categoria;
-import com.example.data.model.Producto;
+import com.example.data.model.Pedido;
 import com.example.data.repos.CategoriaRepository;
+import com.example.data.repos.PedidoRepository;
 import com.example.data.repos.ProductoRepository;
 import com.example.data.repos.TagRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class MainDeMentira {
+public class DataSeed {
 
     private final ProductoRepository productoRepository;
     private final CategoriaRepository categoriaRepository;
     private final TagRepository tagRepository;
+    private final PedidoRepository pedidoRepository;
 
     @PostConstruct
     public void run() {
@@ -43,6 +41,10 @@ public class MainDeMentira {
                 .build();
 
         productoRepository.saveAll(List.of(p, p2));*/
+
+        Pedido pedido = Pedido.builder()
+                .cliente("Luismi")
+                .build();
 
         productoRepository
                 .findAll()

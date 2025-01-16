@@ -1,21 +1,19 @@
-package com.example.data.model;
+package com.example.Apartado1.model;
 
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
-import java.util.*;
+import java.util.Objects;
 
-@Getter
 @Setter
-@AllArgsConstructor
+@Getter
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
-@ToString
-public class Tag {
+public class Producto {
 
     @Id
     @GeneratedValue
@@ -23,11 +21,13 @@ public class Tag {
 
     private String nombre;
 
-   @ManyToMany(mappedBy = "tags", fetch = FetchType.EAGER)
-   @Builder.Default
-   @Setter(AccessLevel.NONE)
-   @ToString.Exclude
-   private Set<Producto> productos = new HashSet<>();
+    private double precioVenta;
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id",
+                foreignKey = @ForeignKey(name = "fk_producto_categoria")
+    )
+    private Categoria categoria;
 
     @Override
     public final boolean equals(Object o) {
@@ -36,8 +36,8 @@ public class Tag {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        Tag categoria = (Tag) o;
-        return getId() != null && Objects.equals(getId(), categoria.getId());
+        Producto producto = (Producto) o;
+        return getId() != null && Objects.equals(getId(), producto.getId());
     }
 
     @Override
