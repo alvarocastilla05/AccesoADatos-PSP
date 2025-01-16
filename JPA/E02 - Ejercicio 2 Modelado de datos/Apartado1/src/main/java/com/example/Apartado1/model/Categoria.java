@@ -1,9 +1,6 @@
 package com.example.Apartado1.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -26,8 +23,32 @@ public class Categoria {
 
     private String nombre;
 
-    @OneToMany
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
     private List<Producto> productos = new ArrayList<>();
+
+    /*@ManyToOne
+    @JoinColumn(name = "categoria_id",
+                foreignKey = @ForeignKey(name = "fk_categoria_categoria")
+    )
+    private  Categoria categoria;
+
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    private List<Categoria> categorias = new ArrayList<>();*/
+
+    //Helper
+    public void addProducto(Producto p){
+        p.setCategoria(this);
+        this.getProductos().add(p);
+    }
+
+    public void removeProducto(Producto p){
+        this.getProductos().remove(p);
+        p.setCategoria(null);
+    }
 
     @Override
     public final boolean equals(Object o) {
