@@ -16,21 +16,34 @@ public class DataSeed {
     private final ProductoRepository productoRepository;
 
     @PostConstruct
-    public void run(){
+    public void init() {
 
-        Categoria c = categoriaRepository.getReferenceById(1L);
+        Categoria c = Categoria.builder()
+                .nombre("Alimentación")
+                .build();
+
+        Categoria c2 = Categoria.builder()
+                .nombre("Bollería")
+                .categoriaPadre(c)
+                .build();
+
+        Categoria c3 = Categoria.builder()
+                .nombre("Electrónica")
+                .build();
+
+        categoriaRepository.save(c);
+        categoriaRepository.save(c2);
+        categoriaRepository.save(c3);
 
         Producto p = Producto.builder()
-                .nombre("Un producto")
-                .precioVenta(123.45)
+                .nombre("Napolitana")
+                .precioVenta(2.30)
                 .categoria(c)
                 .build();
 
-        c.addProducto(p);
-
         productoRepository.save(p);
 
-        System.out.println("Prodcutos de la categoria 1:");
-        System.out.println(c.getProductos());
+        categoriaRepository.delete(c);
+
     }
 }

@@ -28,18 +28,18 @@ public class Categoria {
     @ToString.Exclude
     private List<Producto> productos = new ArrayList<>();
 
-    /*@ManyToOne
-    @JoinColumn(name = "categoria_id",
-                foreignKey = @ForeignKey(name = "fk_categoria_categoria")
+    @ManyToOne
+    @JoinColumn(name = "categoria_relacion_id",
+                foreignKey = @ForeignKey(name = "fk_categoria_padre_categoria")
     )
-    private  Categoria categoria;
+    private  Categoria categoriaPadre;
 
-    @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "categoriaPadre", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
-    private List<Categoria> categorias = new ArrayList<>();*/
+    private List<Categoria> listaCategoriasHijas = new ArrayList<>();
 
-    //Helper
+    //Helper-Producto
     public void addProducto(Producto p){
         p.setCategoria(this);
         this.getProductos().add(p);
@@ -48,6 +48,17 @@ public class Categoria {
     public void removeProducto(Producto p){
         this.getProductos().remove(p);
         p.setCategoria(null);
+    }
+
+    //Helper-Categoria
+    public void addCategoria(Categoria c){
+        c.setCategoriaPadre(this);
+        this.getListaCategoriasHijas().add(c);
+    }
+
+    public void removeCategoria(Categoria c){
+        this.getListaCategoriasHijas().remove(c);
+        c.setCategoriaPadre(null);
     }
 
     @Override
