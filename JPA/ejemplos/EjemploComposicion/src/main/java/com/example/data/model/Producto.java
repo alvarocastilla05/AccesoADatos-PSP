@@ -34,7 +34,7 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "categoria_id",
             foreignKey = @ForeignKey(name = "fk_producto_categoria"))
-    @JsonBackReference
+    //@JsonBackReference
     private Categoria categoria;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -47,6 +47,17 @@ public class Producto {
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
+
+    // Helpers Producto - Tag
+    public void addTag(Tag t) {
+        this.tags.add(t);
+        t.getProductos().add(this);
+    }
+
+    public void removeTag(Tag t) {
+        this.tags.remove(t);
+        t.getProductos().remove(this);
+    }
 
 
     @Override

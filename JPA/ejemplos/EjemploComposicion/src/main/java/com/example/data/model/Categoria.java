@@ -28,7 +28,7 @@ public class Categoria {
     @OneToMany(mappedBy = "categoria", fetch = FetchType.EAGER)
     @Builder.Default
     @ToString.Exclude
-    @JsonManagedReference
+    //@JsonManagedReference
     private List<Producto> productos = new ArrayList<>();
 
 
