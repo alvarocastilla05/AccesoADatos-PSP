@@ -26,9 +26,6 @@ public class CursoOnline {
     private double puntuacion;
 
     @ManyToOne
-    @JoinColumn(name = "profesor_id",
-            foreignKey = @ForeignKey(name = "fk_cursoOnline_profesor")
-    )
     private Profesor profesor;
 
     @OneToMany(mappedBy = "cursoOnline",

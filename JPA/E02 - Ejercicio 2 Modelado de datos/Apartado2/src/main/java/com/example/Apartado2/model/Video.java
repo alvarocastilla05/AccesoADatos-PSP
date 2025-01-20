@@ -23,6 +23,8 @@ public class Video {
     @ManyToOne
     private CursoOnline cursoOnline;
 
+    private int orden;
+
     private String titulo;
 
     private String descripcion;
