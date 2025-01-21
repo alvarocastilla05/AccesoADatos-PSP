@@ -24,8 +24,10 @@ public class DataSeed {
     private final UsoRepository usoRepository;
 
     @PostConstruct
-    public void run() {
-        // Crear estaciones
+    public void run(){
+
+        // Crear estaciones.
+
         Estacion estacion1 = Estacion.builder()
                 .numero(1L)
                 .nombre("Estación Central")
@@ -43,7 +45,8 @@ public class DataSeed {
         estacionRepository.save(estacion1);
         estacionRepository.save(estacion2);
 
-        // Crear bicicletas y asociarlas a estaciones
+        // Crear bicicletas y asociarlas a estaciones.
+
         Bicicleta bicicleta1 = Bicicleta.builder()
                 .marca("MarcaX")
                 .modelo("ModeloA")
@@ -56,15 +59,14 @@ public class DataSeed {
                 .estado("Disponible")
                 .build();
 
-        estacion1.addBicicleta(bicicleta1); // Asociación bidireccional
+        estacion1.addBicicleta(bicicleta1);
         estacion2.addBicicleta(bicicleta2);
 
         bicicletaRepository.save(bicicleta1);
         bicicletaRepository.save(bicicleta2);
-        estacionRepository.save(estacion1);
-        estacionRepository.save(estacion2);
 
-        // Crear usuarios
+        // Crear usuarios.
+
         Usuario usuario1 = Usuario.builder()
                 .nombre("Juan Pérez")
                 .numTarjeta(1234567890123456L)
@@ -82,7 +84,8 @@ public class DataSeed {
         usuarioRepository.save(usuario1);
         usuarioRepository.save(usuario2);
 
-        // Crear usos y asociarlos a usuarios, bicicletas y estaciones
+        // Crear usos y asociarlos a usuarios, bicicletas y estaciones.
+
         Uso uso1 = Uso.builder()
                 .fechaInicio(LocalDate.of(2025, 1, 20))
                 .fechaFin(LocalDate.of(2025, 1, 20))
@@ -90,23 +93,34 @@ public class DataSeed {
                 .build();
 
         Uso uso2 = Uso.builder()
-                .fechaInicio(LocalDate.of(2025, 1, 21))
-                .fechaFin(null) // En curso
+                .fechaInicio(LocalDate.of(2025, 3, 21))
+                .fechaFin(null)   // Está en curso. :P
                 .coste(0.0)
                 .build();
 
-        // Asociaciones bidireccionales para Uso 1
+        Uso uso3 = Uso.builder()
+                .fechaInicio(LocalDate.of(2025, 2, 18))
+                .fechaFin(LocalDate.of(2025, 2, 19))
+                .coste(3.20)
+                .build();
+
+        // Asociaciones bidireccionales para los usos.
+
         usuario1.addUso(uso1);
         bicicleta1.addUso(uso1);
         estacion1.addUso(uso1);
 
-        // Asociaciones bidireccionales para Uso 2
         usuario2.addUso(uso2);
         bicicleta2.addUso(uso2);
         estacion2.addUso(uso2);
 
+        usuario1.addUso(uso3);
+        bicicleta1.addUso(uso3);
+        estacion1.addUso(uso3);
+
         usoRepository.save(uso1);
         usoRepository.save(uso2);
+        usoRepository.save(uso3);
 
         System.out.println(usuario1);
         System.out.println(usuario2);
@@ -120,5 +134,8 @@ public class DataSeed {
         System.out.println(estacion1);
         System.out.println(estacion2);
 
+        usoRepository.delete(uso1);
+
     }
+
 }

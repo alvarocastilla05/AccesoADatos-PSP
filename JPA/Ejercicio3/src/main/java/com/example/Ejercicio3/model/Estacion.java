@@ -29,12 +29,20 @@ public class Estacion {
 
     private int capacidad;
 
-    @OneToMany(mappedBy = "estacion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "estacion",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @Builder.Default
     @ToString.Exclude
     private List<Uso> usos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "estacion", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "estacion",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @Builder.Default
     @ToString.Exclude
     private List<Bicicleta> bicicletas = new ArrayList<>();

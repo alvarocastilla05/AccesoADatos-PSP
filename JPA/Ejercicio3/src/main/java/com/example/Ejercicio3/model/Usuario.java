@@ -29,7 +29,11 @@ public class Usuario {
 
     private double saldo;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     @Builder.Default
     @ToString.Exclude
     private List<Uso>  usos = new ArrayList<>();
