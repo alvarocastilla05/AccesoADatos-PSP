@@ -10,9 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Moto extends Vehiculo{
+public class Empleado extends Persona{
 
-    private int numeroRuedas;
+    private String puesto;
 
-    private boolean casco;
+    private double sueldo;
 }

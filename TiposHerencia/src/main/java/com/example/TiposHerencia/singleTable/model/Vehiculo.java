@@ -5,23 +5,21 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@ToString
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
+@Getter
+@Setter
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public abstract class Verdura {
+public abstract class Vehiculo {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    private String nombre;
+    private String marca;
 
-    private double precio;
+    private String modelo;
 
-    private LocalDate caducidad;
 }

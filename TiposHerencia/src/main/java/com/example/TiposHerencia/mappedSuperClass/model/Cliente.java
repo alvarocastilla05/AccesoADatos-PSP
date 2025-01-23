@@ -10,9 +10,9 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Coche extends Vehiculo{
+public class Cliente extends Persona{
 
-    private int numeroPuertas;
+    private String numeroCliente;
 
-    private int numPlazas;
+    private double dineroGastado;
 }
