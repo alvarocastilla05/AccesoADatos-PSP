@@ -2,6 +2,7 @@ package com.salesianostriana.dam.jwt.security.user.controller;
 
 import com.salesianostriana.dam.jwt.security.security.jwt.access.JwtService;
 import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshToken;
+import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshTokenRequest;
 import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshTokenService;
 import com.salesianostriana.dam.jwt.security.user.dto.CreateUserRequest;
 import com.salesianostriana.dam.jwt.security.user.dto.LoginRequest;
@@ -63,6 +64,18 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(UserResponse.of(user, accessToken, refreshToken.getToken()));
 
+    }
+
+    @GetMapping("/auth/refresh/token")
+    public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest req){
+        String token = req.refreshToken();
+
+        //Validar token.
+        //Obtener el usuario asociado al token de refresco.
+        //Generar un nuevo token de acceso.
+        //Generar un nuevo token de refresco.
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(refreshTokenService.refreshToken(token));
     }
 
     @GetMapping("/me")

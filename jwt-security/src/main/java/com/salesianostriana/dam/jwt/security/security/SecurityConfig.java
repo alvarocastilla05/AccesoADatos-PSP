@@ -69,10 +69,14 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authz -> authz
                 .requestMatchers(HttpMethod.POST, "/auth/register", "/auth/login").permitAll()
                 .requestMatchers("/me/admin").hasRole("ADMIN")
+                .requestMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated());
 
 
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+        http.headers(headers ->
+                headers.frameOptions(frameOptions -> frameOptions.disable()));
 
         return http.build();
     }
