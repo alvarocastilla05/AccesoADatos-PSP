@@ -9,7 +9,9 @@ import com.salesianostriana.dam.jwt.security.user.dto.LoginRequest;
 import com.salesianostriana.dam.jwt.security.user.dto.UserResponse;
 import com.salesianostriana.dam.jwt.security.user.model.User;
 import com.salesianostriana.dam.jwt.security.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,10 +20,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +33,7 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/auth/register")
     public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest createUserRequest) {
@@ -87,6 +90,16 @@ public class UserController {
     public User adminMe(@AuthenticationPrincipal User user) {
         return user;
     }
+
+    @PostMapping("/user/registration")
+    public ModelAndView registerUserAccount(@ModelAttribute("user") UserResponse userResponse, HttpServletRequest request, Errors errors){
+
+        try {
+            User registered = userService.createUser(userResponse);
+        }
+    }
+
+
 
 }
 
