@@ -1,9 +1,11 @@
 package com.salesianostriana.dam.jwt.security.user.controller;
 
+import com.salesianostriana.dam.jwt.security.security.exceptionhandling.JwtException;
 import com.salesianostriana.dam.jwt.security.security.jwt.access.JwtService;
 import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshToken;
 import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshTokenRequest;
 import com.salesianostriana.dam.jwt.security.security.jwt.refresh.RefreshTokenService;
+import com.salesianostriana.dam.jwt.security.security.jwt.verification.OnRegistrationCompleteEvent;
 import com.salesianostriana.dam.jwt.security.user.dto.CreateUserRequest;
 import com.salesianostriana.dam.jwt.security.user.dto.LoginRequest;
 import com.salesianostriana.dam.jwt.security.user.dto.UserResponse;
@@ -20,6 +22,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -92,11 +95,22 @@ public class UserController {
     }
 
     @PostMapping("/user/registration")
-    public ModelAndView registerUserAccount(@ModelAttribute("user") UserResponse userResponse, HttpServletRequest request, Errors errors){
+    public ModelAndView registerUserAccount(@ModelAttribute("user") CreateUserRequest user, HttpServletRequest request, Errors errors){
 
         try {
-            User registered = userService.createUser(userResponse);
+            User registered = userService.createUser(user);
+
+            String appUrl = request.getContextPath();
+            eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), appUrl));
+        }catch (JwtException ex){
+            ModelAndView mav = new ModelAndView("registration", "user", user);
+            mav.addObject("message", "An account for that username/email already exist");
+            return mav;
+        }catch (RuntimeException ex){
+            return new ModelAndView("emailError", "user", user);
         }
+
+        return new ModelAndView("successRegister", "user", user);
     }
 
 
